@@ -1,0 +1,15 @@
+
+# Dependências
+node_modules/
+
+# Arquivos gerados pelo Cypress
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+
+# Relatórios de testes
+mochawesome-report/
+
+# Arquivos de ambiente
+.env
+.env.*
