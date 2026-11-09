@@ -36,3 +36,9 @@ Cypress.Commands.add('cadastrarUsuario', (email, nome, senha) => {
     cy.contains('Cadastrar').click()
     cy.contains('foi criada com sucesso').should('be.visible')
 })
+
+Cypress.Commands.add('realizarLogin', (email, senha) => {
+    cy.get('.card__login input[name="email"]').type(email)
+    cy.get('.card__login input[name="password"]').type(senha)
+    cy.contains('button', 'Acessar').click()
+})
