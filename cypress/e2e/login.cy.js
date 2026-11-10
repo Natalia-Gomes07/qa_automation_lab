@@ -39,7 +39,7 @@ describe('Autenticação de usuário', () => {
 
     })
 
-    it('CT-010 - Não deve permitir login com senha inválida', () => {
+    it('CT-007 - Não deve permitir login com senha inválida', () => {
 
         const email = `teste${Date.now()}@exemplo.com`
         const senha = 'Teste123'
@@ -53,6 +53,29 @@ describe('Autenticação de usuário', () => {
         cy.get('#modalText')
             .should('be.visible')
             .and('contain.text', 'Usuário ou senha inválido')
+    })
+
+    it('CT-008 - Não deve permitir login com e-mail inválido', () => {
+        
+        const email = `teste${Date.now()}@exemplo.com`
+        const senha = 'Teste123'
+        const emailInvalido = 'test@'
+
+        cy.cadastrarUsuario(email, 'Usuário Teste', senha)
+        cy.get('#btnCloseModal').click()
+
+        cy.get('.card__login input[name="email"]').type(emailInvalido)
+        cy.get('.card__login input[name="password"]').type(senha)
+
+        cy.contains('.input__warging', 'Formato inválido')
+            .should('be.visible')
+
+        cy.contains('button', 'Acessar').click()
+
+        cy.get('.card__login input[name="email"]')
+            .should('have.prop', 'validity')
+            .its('typeMismatch')
+            .should('be.true')
     })
 
 })
