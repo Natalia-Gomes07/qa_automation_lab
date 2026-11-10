@@ -14,17 +14,45 @@ describe('Autenticação de usuário', () => {
 
         cy.get('#btnCloseModal').click()
 
-        cy.get('.card__login input[name="email"]').type(email)
-        cy.get('.card__login input[name="password"]').type(senha)
-        cy.contains('button', 'Acessar').click()
-
+        cy.realizarLogin(email, senha)
         cy.contains('Usuário Teste').should('be.visible')
 
-        
         cy.get('@numeroConta').then((numeroConta) => {
             cy.get('#textAccountNumber span')
                 .should('have.text', numeroConta)
         })     
+    })
+
+    it('CT-006 - Deve realizar logout com sucesso', () => {
+        
+        const email = `teste${Date.now()}@exemplo.com`
+        const senha = 'Teste123'
+
+        cy.cadastrarUsuario(email, 'Usuário Teste', senha)
+        cy.get('#btnCloseModal').click()
+
+        cy.realizarLogin(email, senha)
+        cy.contains('Usuário Teste').should('be.visible')
+
+        cy.get('#btnExit').click()
+        cy.get('.card__login').should('be.visible')
+
+    })
+
+    it('CT-010 - Não deve permitir login com senha inválida', () => {
+
+        const email = `teste${Date.now()}@exemplo.com`
+        const senha = 'Teste123'
+        const senhaInvalida = 'SenhaErrada123'
+
+        cy.cadastrarUsuario(email, 'Usuário Teste', senha)
+        cy.get('#btnCloseModal').click()
+
+        cy.realizarLogin(email, senhaInvalida)
+
+        cy.get('#modalText')
+            .should('be.visible')
+            .and('contain.text', 'Usuário ou senha inválido')
     })
 
 })
