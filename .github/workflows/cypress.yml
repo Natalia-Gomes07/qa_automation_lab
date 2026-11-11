@@ -1,0 +1,25 @@
+name: Testes automatizados - Cypress
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs: 
+  testes: 
+    runs-on: ubuntu-latest
+    
+    steps: 
+      - name: Baixar código do repositório
+        uses: actions/checkout@v7
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Instalar dependências
+        run: npm ci
+        
+      - name: Executar testes Cypress
+        run: npx cypress run
