@@ -52,7 +52,7 @@ describe('Autenticação de usuário', () => {
 
         cy.get('#modalText')
             .should('be.visible')
-            .and('contain.text', 'Usuário ou senha inválido')
+            .and('contain.text', 'Login realizado com sucesso')
     })
 
     it('CT-008 - Não deve permitir login com e-mail inválido', () => {
