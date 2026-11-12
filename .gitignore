@@ -6,6 +6,7 @@ node_modules/
 cypress/screenshots/
 cypress/videos/
 cypress/downloads/
+cypress/reports/
 
 # Relatórios de testes
 mochawesome-report/
